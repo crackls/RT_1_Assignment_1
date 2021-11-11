@@ -1,17 +1,19 @@
-Python Robotics Simulator
+Research Track 1: first Assignment
 ================================
 
-This is a simple, portable robot simulator developed by [Student Robotics](https://studentrobotics.org).
-Some of the arenas and the exercises have been modified for the Research Track I course
+Here in this repository you can find the python code for the first assignment of the course Research Track 1,
+done by Carlos Ángel López de Rodas Serrano.
+It uses the robot simulator developed by [Student Robotics](https://studentrobotics.org).
 
-Installing and running
+
+Running
 ----------------------
 
 The simulator requires a Python 2.7 installation, the [pygame](http://pygame.org/) library, [PyPyBox2D](https://pypi.python.org/pypi/pypybox2d/2.1-r331), and [PyYAML](https://pypi.python.org/pypi/PyYAML/).
 
-Once the dependencies are installed, simply run the `test.py` script to test out the simulator.
+Once the dependencies are installed run the code just run `run.py` together with `assignment1.py` with python 2
 
-## Exercise
+## Code description
 -----------------------------
 
 To run one or more scripts in the simulator, use `run.py`, passing it the file names. 
