@@ -16,6 +16,36 @@ Once the dependencies are installed run the code just run `run.py` together with
 ## Code description
 -----------------------------
 
+The code drives the robot around a circuit grabing the silver tokens it comes across and avoiding touching the golden tokens.
+To do so, first, some constants and functions are defined.
+
+### Constants ###
+
+a_th = 0.4
+""" float: Threshold for the control of the linear distance """
+
+d_th = 70.0
+""" float: Threshold for angle for the turn """
+
+t_th = 1.5
+""" float: Threshold for distance for the forward vision """
+
+g_th = 6.0
+""" float: Threshold for distance for the detection of a silver token """
+
+ag_th = 1.5
+""" float: Threshold for the angle orientation """
+
+speed = 50.0
+""" float: desired speed of the robot """
+
+width = 76.4
+""" float: with of the robot """
+
+pi = 3.14159265359
+
+### Functions ###
+
 To run one or more scripts in the simulator, use `run.py`, passing it the file names. 
 
 I am proposing you three exercises, with an increasing level of difficulty.
