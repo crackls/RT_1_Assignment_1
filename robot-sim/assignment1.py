@@ -66,6 +66,7 @@ def turn(speed, seconds):
     	R.motors[0].m1.power = 0
     	
 def silver_token_visible(dist, rot, d_th):
+
 	"""
 	Function to decide whether a silver token placed at the front of the car (in range +d_th/3, -d_th/3 degrees)
 	is visible (return True) or not (return False), which means no golden tokens are closer to the car
