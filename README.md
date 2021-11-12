@@ -14,18 +14,17 @@ The simulator requires a Python 2.7 installation, the [pygame](http://pygame.org
 When done, you can run the code with:
 
 ```bash
-python2 run.py assignment1.py
+$ python2 run.py assignment1.py
 ```
 
 ## Code description
 -----------------------------
 
 The code drives the robot around a circuit grabing the silver tokens it comes across and avoiding touching the golden tokens.
-To do so, first, some constants and functions are defined.
 
 ### Pseudocode ###
 
-The logical behabiour of the code is the following:
+The logical behaviour of the code is the following:
 
 ```
 WHILE True;
@@ -55,6 +54,7 @@ WHILE True;
 		drive the car forwards;
 ```
 
+
 To implement this code, some constants and functions had to be defined.
 
 ### Constants ###
@@ -77,14 +77,16 @@ To implement this code, some constants and functions had to be defined.
 ```
   It is possible to control the direction of the turn by the sign of the variable ``speed`` (+ turns to the right/ - turns to the left)
 
-* A function to determine whether there are golden tokens is defined:
+
+* A function to determine whether there are golden tokens or not, is defined:
 
 ```python
   def vision_delantera(d_th, dist):
 ```
 
-  This function will search for any golden token in a certain range: ``+d_th, -d_th`` degrees and a distance of ``dist``.
+  This function will search for any golden token in a certain range.
   It returns ``True`` if there are no golden tokens in that range, ``False`` otherwise.
+
 
 * To determine if a silver token is reachable we define this function:
 
@@ -92,8 +94,9 @@ To implement this code, some constants and functions had to be defined.
   def silver_token_visible(dist, rot, d_th):
 ```
 
-  The function will search for silver tokens in a range of ``+d_th, -d_th`` degrees and a distance of ``dist`` and if it finds it, it will check if there are golden tokens in between.
+  The function will search for silver tokens in a certain range and if it finds it, it will check if there are golden tokens in between.
   If there are golden tokens in between or no silver tokens are found, it will return ``False``, otherwise, it will return ``True``
+
 
 * If a silver token is reachable, the code that describes the behaviour to be performed is compacted in the next function:
 
@@ -108,6 +111,7 @@ To implement this code, some constants and functions had to be defined.
 ```
 
   This function will grab the token, turn 180 degree, release the token and turn back to continue its jurney.
+  
   
 * The last function needed for the code is folowing:
 
