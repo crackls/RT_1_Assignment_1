@@ -11,7 +11,11 @@ Running
 
 The simulator requires a Python 2.7 installation, the [pygame](http://pygame.org/) library, [PyPyBox2D](https://pypi.python.org/pypi/pypybox2d/2.1-r331), and [PyYAML](https://pypi.python.org/pypi/PyYAML/).
 
-Once the dependencies are installed run the code just run `run.py` together with `assignment1.py` with python 2
+When done, you can run the code with:
+
+```bash
+python2 run.py assignment1.py
+```
 
 ## Code description
 -----------------------------
@@ -23,112 +27,94 @@ To do so, first, some constants and functions are defined.
 
 The logical behabiour of the code is the following:
 
-while True
+```
+WHILE True;
+
+	IF (there are golden tokens in front of the car);
+	
+		IF (the golden tokens on the right of the car are closer than the ones on the left);
+			turn left;
+		ELSE 
+			turn right;
+			
+	ELSEIF (there is a silver token in front of the car AND there are no golden tokens it the way);
+	
+		IF (close enough);
+			grab the token;
+			turn 180 degrees;
+			release the token;
+			turn 180 degrees;
+		ELSEIF (align with the token);
+			drive towards the token;
+		ELSEIF (not align to the right);
+			turn left;
+		ELSEIF (not align to the left);
+			turn right;
+			
+	ELSE;
+		drive the car forwards;
+```
+
+To implement this code, some constants and functions had to be defined.
 
 ### Constants ###
 
-a_th = 0.4
-""" float: Threshold for the control of the linear distance """
-
-d_th = 70.0
-""" float: Threshold for angle for the turn """
-
-t_th = 1.5
-""" float: Threshold for distance for the forward vision """
-
-g_th = 6.0
-""" float: Threshold for distance for the detection of a silver token """
-
-ag_th = 1.5
-""" float: Threshold for the angle orientation """
-
-speed = 50.0
-""" float: desired speed of the robot """
-
-width = 76.4
-""" float: with of the robot """
-
-pi = 3.14159265359
+* `a_th` (float): threshold to grab the silver token. It indicates when the car is close enough to the silver token.
+* `d_th` (float): it defines the front of the car angle range.
+* `t_th` (float): it defines the front of the car, distance range.
+* `g_th` (float): distance at which a silver token can be detected.
+* `ag_th` (float): angle range for alignment with the silver tokens.
+* `speed` (float): speed of the wheels.
+* `width` (float): width of the car.
 
 ### Functions ###
 
-To run one or more scripts in the simulator, use `run.py`, passing it the file names. 
-
-I am proposing you three exercises, with an increasing level of difficulty.
-The instruction for the three exercises can be found inside the .py files (exercise1.py, exercise2.py, exercise3.py).
-
-When done, you can run the program with:
-
-```bash
-$ python run.py exercise1.py
-```
-
-You have also the solutions of the exercises (folder solutions)
-
-```bash
-$ python run.py solutions/exercise1_solution.py
-```
-
-Robot API
----------
-
-The API for controlling a simulated robot is designed to be as similar as possible to the [SR API][sr-api].
-
-### Motors ###
-
-The simulated robot has two motors configured for skid steering, connected to a two-output [Motor Board](https://studentrobotics.org/docs/kit/motor_board). The left motor is connected to output `0` and the right motor to output `1`.
-
-The Motor Board API is identical to [that of the SR API](https://studentrobotics.org/docs/programming/sr/motors/), except that motor boards cannot be addressed by serial number. So, to turn on the spot at one quarter of full power, one might write the following:
+* Two functions to move the robot around where defined:
 
 ```python
-R.motors[0].m0.power = 25
-R.motors[0].m1.power = -25
+  def drive(speed, seconds):
+  def turn(speed, seconds):
 ```
+  It is possible to control the direction of the turn by the sign of the variable ``speed`` (+ turns to the right/ - turns to the left)
 
-### The Grabber ###
-
-The robot is equipped with a grabber, capable of picking up a token which is in front of the robot and within 0.4 metres of the robot's centre. To pick up a token, call the `R.grab` method:
-
-```
-success = R.grab()
-```
-
-The `R.grab` function returns `True` if a token was successfully picked up, or `False` otherwise. If the robot is already holding a token, it will throw an `AlreadyHoldingSomethingException`.
-
-To drop the token, call the `R.release` method.
-
-Cable-tie flails are not implemented.
-
-### Vision ###
-
-To help the robot find tokens and navigate, each token has markers stuck to it, as does each wall. The `R.see` method returns a list of all the markers the robot can see, as `Marker` objects. The robot can only see markers which it is facing towards.
-
-Each `Marker` object has the following attributes:
-
-* `info`: a `MarkerInfo` object describing the marker itself. Has the following attributes:
-  * `code`: the numeric code of the marker.
-  * `marker_type`: the type of object the marker is attached to (either `MARKER_TOKEN_GOLD`, `MARKER_TOKEN_SILVER` or `MARKER_ARENA`).
-  * `offset`: offset of the numeric code of the marker from the lowest numbered marker of its type. For example, token number 3 has the code 43, but offset 3.
-  * `size`: the size that the marker would be in the real game, for compatibility with the SR API.
-* `centre`: the location of the marker in polar coordinates, as a `PolarCoord` object. Has the following attributes:
-  * `length`: the distance from the centre of the robot to the object (in metres).
-  * `rot_y`: rotation about the Y axis in degrees.
-* `dist`: an alias for `centre.length`
-* `res`: the value of the `res` parameter of `R.see`, for compatibility with the SR API.
-* `rot_y`: an alias for `centre.rot_y`
-* `timestamp`: the time at which the marker was seen (when `R.see` was called).
-
-For example, the following code lists all of the markers the robot can see:
+* A function to determine whether there are golden tokens is defined:
 
 ```python
-markers = R.see()
-print "I can see", len(markers), "markers:"
-
-for m in markers:
-    if m.info.marker_type in (MARKER_TOKEN_GOLD, MARKER_TOKEN_SILVER):
-        print " - Token {0} is {1} metres away".format( m.info.offset, m.dist )
-    elif m.info.marker_type == MARKER_ARENA:
-        print " - Arena marker {0} is {1} metres away".format( m.info.offset, m.dist )
+  def vision_delantera(d_th, dist):
 ```
 
-[sr-api]: https://studentrobotics.org/docs/programming/sr/
+  This function will search for any golden token in a certain range: ``+d_th, -d_th`` degrees and a distance of ``dist``.
+  It returns ``True`` if there are no golden tokens in that range, ``False`` otherwise.
+
+* To determine if a silver token is reachable we define this function:
+
+```python
+  def silver_token_visible(dist, rot, d_th):
+```
+
+  The function will search for silver tokens in a range of ``+d_th, -d_th`` degrees and a distance of ``dist`` and if it finds it, it will check if there are golden tokens in between.
+  If there are golden tokens in between or no silver tokens are found, it will return ``False``, otherwise, it will return ``True``
+
+* If a silver token is reachable, the code that describes the behaviour to be performed is compacted in the next function:
+
+```python
+  def silver(dist, rot, s, a, d, w, pi):
+```
+
+  This function will drive the car towards the silver token. When it reaches the token, another function is executed:
+  
+```python
+  def voltereta(speed, w, pi):
+```
+
+  This function will grab the token, turn 180 degree, release the token and turn back to continue its jurney.
+  
+* The last function needed for the code is folowing:
+
+```python
+  def vision_lateral_coche():
+```
+
+  This will compare the distance of the golden tokens on the right side and the left side of the car. 
+  It returns ``+1`` if the tokens are closer on the left side and ``-1`` otherwise.
+
