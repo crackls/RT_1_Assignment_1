@@ -19,6 +19,12 @@ Once the dependencies are installed run the code just run `run.py` together with
 The code drives the robot around a circuit grabing the silver tokens it comes across and avoiding touching the golden tokens.
 To do so, first, some constants and functions are defined.
 
+### Pseudocode ###
+
+The logical behabiour of the code is the following:
+
+while True
+
 ### Constants ###
 
 a_th = 0.4
@@ -83,7 +89,7 @@ R.motors[0].m1.power = -25
 
 The robot is equipped with a grabber, capable of picking up a token which is in front of the robot and within 0.4 metres of the robot's centre. To pick up a token, call the `R.grab` method:
 
-```python
+```
 success = R.grab()
 ```
 
