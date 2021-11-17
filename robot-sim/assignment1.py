@@ -199,7 +199,7 @@ while 1:	# to keep the robot moving at any time
 				ss = False
 		else:
 			ss = False
-
+	
 
 	if not algo:	# if a golden token is in front
 		print("Watch the wal!!")   
@@ -207,7 +207,7 @@ while 1:	# to keep the robot moving at any time
 			b = vision_lateral_coche()	# turn left or right depending on the distante between the car and the golden tokens on its sides
 			giro = False
 		turn(b*speed/2, 0.1)
-	elif ss:	# if golden token visible 
+	elif ss:	# if silver token is visible 
 		giro = True
 		print("Silver Token detected")
 		silver(dist_silver, rot_silver, speed, ag_th, a_th, width, pi)	# go for the silver token and perform the voltereta()
@@ -215,15 +215,5 @@ while 1:	# to keep the robot moving at any time
 		giro = True
 		print("Nothing ahead")
 		drive(speed, 0.1)
-
-
-
-
-
-
-
-
-
-
 
 

@@ -121,4 +121,33 @@ To implement this code, some constants and functions had to be defined.
 
   This will compare the distance of the golden tokens on the right side and the left side of the car. 
   It returns ``+1`` if the tokens are closer on the left side and ``-1`` otherwise.
+  
+## Psible improvements
+-----------------------------
+
+The main problem with this code (regarding runnig time) is the fact that, when no silver token is visible, a couple of nested ``for`` loops have to be entirely performed:
+
+```python
+for token in R.see():	# to check if there are silver tokens visible in front of the car (ss = True if they are and ss = False if they aren't)
+		if  token.info.marker_type is MARKER_TOKEN_SILVER and silver_token_visible(token.dist, token.rot_y, d_th):
+			if token.dist < g_th:	# the car can only see silver tokens that are 6[-] close
+				ss = True
+				rot_silver = token.rot_y
+				dist_silver = token.dist
+				break
+			else:
+				ss = False
+		else:
+			ss = False
+```
+
+This ``for`` loop is calling the function ``silver_token_visible`` (which has a ``for`` inside) each loop. 
+
+This can be improve by trying a more efficient loop structure to reduce the computation time or even trying to redefine the concept of "silver token visible" so no nested loops are required.
+
+
+
+
+
+
 
