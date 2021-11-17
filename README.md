@@ -141,7 +141,7 @@ for token in R.see():	# to check if there are silver tokens visible in front of 
 			ss = False
 ```
 
-This ``for`` loop is calling the function ``silver_token_visible`` (which has a ``for`` inside) each loop. 
+This ``for`` loop is calling the function ``silver_token_visible`` (which has a ``for`` loop inside) each loop. 
 
 This can be improve by trying a more efficient loop structure to reduce the computation time or even trying to redefine the concept of "silver token visible" so no nested loops are required.
 
